@@ -15,8 +15,15 @@ public class ProductManager
     {
         var data = products.FirstOrDefault(x => x.Name.ToLower() == bundleName.ToLower());
         if (data != null)
-        { 
-            List<Products> nestedChildProducts = GetNestedChildProducts(data.Id, products, mappings,  null);
+        {
+            if (data.IsAssembled)
+            {
+                List<Products> nestedChildProducts = GetNestedChildProducts(data.Id, products, mappings, null);
+            }
+            else
+            {
+                minVal = data.Qty;
+            }
         }
         return Convert.ToInt32(minVal);
     }
